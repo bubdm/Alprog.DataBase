@@ -1,0 +1,33 @@
+[
+  {
+    "id": 0,
+    "firstName": "George",
+    "secondName": "Bartolomey",
+    "info": {
+      "email": "zhora.bartolomey@mail.ru",
+      "phone": "89111647507"
+    },
+    "socials": [
+      "vk",
+      "github",
+      "habr"
+    ]
+  },
+  {
+    "id": 1,
+    "firstName": "Kostantin",
+    "secondName": "Bartolomey",
+    "info": {
+      "email": "bartolomeyko@mail.ru",
+      "phone": "89110802801"
+    },
+    "socials": [
+      "vk",
+      "pikabu",
+      "facebook",
+      "ok",
+      "twitter"
+    ]
+  }
+
+]
