@@ -1,7 +1,18 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <Company>Alprog</Company>
+    <Description>NoSQL JSON Database Management System</Description>
+    <RepositoryType></RepositoryType>
+    <PackageReleaseNotes></PackageReleaseNotes>
+    <PackageTags>Db Json NoSQL</PackageTags>
+    <NeutralLanguage>en</NeutralLanguage>
+    <Copyright>2019 © George Bartolomey</Copyright>
+    <Authors>George Bartolomey</Authors>
+    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
   </PropertyGroup>
 
   <ItemGroup>

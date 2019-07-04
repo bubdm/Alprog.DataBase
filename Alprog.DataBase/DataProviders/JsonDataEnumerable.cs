@@ -8,11 +8,11 @@ using System.Threading;
 
 namespace Alprog.DataBase.DataProviders
 {
-    public class JsonDataEnumerator : IEnumerator<object>, IEnumerator
+    public class JsonDataEnumerator<T> : IEnumerator<T>, IEnumerator
     {
         Stream stream = null;
         WaitHandle syncwaiter;
-        public JsonDataEnumerator(JsonDataProvider provider)
+        public JsonDataEnumerator(JsonDataProvider<T> provider)
         {
             Provider = provider;
             syncwaiter = provider.Context.SyncWaiter;
@@ -31,11 +31,13 @@ namespace Alprog.DataBase.DataProviders
         {
         }
 
-        public JsonDataProvider Provider { get; private set; }
+        public JsonDataProvider<T> Provider { get; private set; }
 
         JsonTextReader reader;
         JsonSerializer serializer;
         public object Current { get; private set; }
+
+        T IEnumerator<T>.Current { get { return (T)Current; } }
 
         bool isDisposed = false;
         public void Dispose()
@@ -67,7 +69,7 @@ namespace Alprog.DataBase.DataProviders
                 if (!canRead)
                     return false;
             }
-            Current = serializer.Deserialize(reader);
+            Current = serializer.Deserialize<T>(reader);
             
             return true;
         }
@@ -81,21 +83,21 @@ namespace Alprog.DataBase.DataProviders
         }
     }
 
-    public class JsonDataEnumerable : IEnumerable<object>
+    public class JsonDataEnumerable<T> : IEnumerable<T>
     {
-        public JsonDataEnumerable(JsonDataProvider provider)
+        public JsonDataEnumerable(JsonDataProvider<T> provider)
         {
             Provider = provider;
         }
-        public JsonDataProvider Provider { get; private set; }
-        public IEnumerator<dynamic> GetEnumerator()
+        public JsonDataProvider<T> Provider { get; private set; }
+        public IEnumerator<T> GetEnumerator()
         {
-            return new JsonDataEnumerator(Provider);
+            return new JsonDataEnumerator<T>(Provider);
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return new JsonDataEnumerator(Provider);
+            return new JsonDataEnumerator<T>(Provider);
         }
     }
 

@@ -1,18 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Alprog.DataBase
 {
-    public class DataContextLocker : IDisposable
+    public class DataContextLocker<T> : IDisposable
     {
         public IDataContext Context { get; private set; }
         public DataContextLocker(IDataContext context, bool lockNow = true)
         {
             Context = context;
-            
+
         }
-        public DataContextLocker(IDataProvider provider, bool lockNow = true) 
+        public DataContextLocker(IDataProvider<T> provider, bool lockNow = true)
             : this(provider.Context, lockNow) { }
 
         public void Lock()
@@ -36,16 +34,16 @@ namespace Alprog.DataBase
                     Release();
                 }
 
-                
+
 
                 disposedValue = true;
             }
         }
 
-        
+
         ~DataContextLocker()
         {
-            
+
             Dispose(true);
         }
 

@@ -5,13 +5,13 @@ using System.Text;
 
 namespace Alprog.DataBase
 {
-    public interface IDataProvider
+    public interface IDataProvider<T>
     {
         IDataContext Context { get; }
-        IData Data { get; }
+        IData<T> Data { get; }
         void Save();
     }
-    public interface IData : ICollection<object>, IEnumerable<object>
+    public interface IData<T> : ICollection<T>, IEnumerable<T>
     {
     }
 }

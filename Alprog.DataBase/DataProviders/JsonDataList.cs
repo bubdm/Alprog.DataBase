@@ -7,9 +7,9 @@ using System.IO;
 using Microsoft.CSharp.RuntimeBinder;
 namespace Alprog.DataBase.DataProviders
 {
-    public class JsonDataList : JsonDataEnumerable, IData
+    public class JsonDataList<T> : JsonDataEnumerable<T>, IData<T>
     {
-        public JsonDataList(JsonDataProvider provider) : base(provider)
+        public JsonDataList(JsonDataProvider<T> provider) : base(provider)
         {
 
         }
@@ -33,7 +33,7 @@ namespace Alprog.DataBase.DataProviders
 
         public object SyncRoot { get { return null; } }
 
-        public void Add(object item)
+        public void Add(T item)
         {
             Provider.Context.SyncWaiter.WaitOne();
             Provider.Context.SyncBlock();
@@ -82,9 +82,9 @@ namespace Alprog.DataBase.DataProviders
             Provider.Context.SyncRelease();
         }
 
-        public bool Contains(object item)
+        public bool Contains(T item)
         {
-            foreach (object element in this)
+            foreach (T element in this)
             {
                 if (element.Equals(item))
                 {
@@ -94,7 +94,7 @@ namespace Alprog.DataBase.DataProviders
             return false;
         }
 
-        public void CopyTo(object[] array, int arrayIndex)
+        public void CopyTo(T[] array, int arrayIndex)
         {
             int i = arrayIndex;
             foreach (var item in this)
@@ -111,20 +111,20 @@ namespace Alprog.DataBase.DataProviders
             int i = index;
             foreach (var item in this)
             {
-                _ = array.SetValue(item, i);
+                array.SetValue(item, i);
                 i++;
                 if (i >= array.Length)
                     break;
             }
         }
 
-        public bool Remove(object item)
+        public bool Remove(T item)
         {
             Provider.Context.SyncWaiter.WaitOne();
             Provider.Context.SyncBlock();
 
             FileInfo tempFile = Provider.Context.File.CopyTo("temp", true);
-            JsonDataProvider tempProvider = new JsonDataProvider(new JsonDataContext(tempFile));
+            JsonDataProvider<T> tempProvider = new JsonDataProvider<T>(new JsonDataContext(tempFile));
 
             Stream stream = Provider.Context.File.Create();
             JsonTextWriter writer = new JsonTextWriter(new StreamWriter(stream));
@@ -132,9 +132,9 @@ namespace Alprog.DataBase.DataProviders
 
             bool removed = false;
             writer.WriteStartArray();
-            foreach (object element in tempProvider.Data)
+            foreach (T element in tempProvider.Data)
             {
-                if (item.Equals(element))
+                if (element.Equals(item))
                 {
                     removed = true;
                     continue;

@@ -56,7 +56,7 @@ namespace Alprog.DataBase.DataProviders
             Dispose();
         }
     }
-    public class JsonDataProvider : IDataProvider
+    public class JsonDataProvider<T> : IDataProvider<T>
     {
         public JsonDataProvider(JsonDataContext context)
         {
@@ -83,7 +83,7 @@ namespace Alprog.DataBase.DataProviders
         {
             Context.SyncWaiter.WaitOne();
 
-            List<object> items = Data.ToList();
+            List<T> items = Data.ToList();
 
             Context.SyncBlock();
 
@@ -106,12 +106,12 @@ namespace Alprog.DataBase.DataProviders
 
         public IDataContext Context { get; private set; }
 
-        JsonDataList data = null;
-        public IData Data
+        JsonDataList<T> data = null;
+        public IData<T> Data
         {
             get
             {
-                data = new JsonDataList(this);
+                data = new JsonDataList<T>(this);
                 return data;
             }
         }

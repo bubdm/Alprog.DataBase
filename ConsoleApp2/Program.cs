@@ -9,7 +9,7 @@ namespace ConsoleApp2
         static void Main(string[] args)
         {
             Console.WriteLine("Hello World!");
-            JsonDataProvider provider = new JsonDataProvider(new JsonDataContext(new FileInfo("data.json")));
+            JsonDataProvider<object> provider = new JsonDataProvider<object>(new JsonDataContext(new FileInfo("data.json")));
             provider.Data.Clear();
             provider.Data.Add("Bartolomey George");
             provider.Data.Remove("Bartolomey George");
