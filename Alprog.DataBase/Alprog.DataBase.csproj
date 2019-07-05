@@ -13,6 +13,8 @@
     <Copyright>2019 © George Bartolomey</Copyright>
     <Authors>George Bartolomey</Authors>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://github.com/ZhoraBartolomey/Alprog.DataBase</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/ZhoraBartolomey/Alprog.DataBase</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>
